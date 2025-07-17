@@ -59,7 +59,7 @@ app.listen(PORT, () => {
  */
 
 //  This should be in frontend file: src/api/yahoofinance.js
-export const fetchStockDetails = async (symbol) => {
+/* export const fetchStockDetails = async (symbol) => {
   try {
     const response = await fetch(`/api/yahoo/${symbol}`);
 
@@ -77,7 +77,7 @@ export const fetchStockDetails = async (symbol) => {
 
     const data = await response.json();
 
-    // Adjust this check based on your backend response shape
+  
     const stock =
       data?.quoteResponse?.result?.[0] || data;
 
@@ -86,6 +86,29 @@ export const fetchStockDetails = async (symbol) => {
     }
 
     return stock;
+  } catch (err) {
+    console.error("fetchStockDetails error:", err.message);
+    return null;
+  }
+}; */
+
+// /client/src/api/yahoofinance.js
+export const fetchStockDetails = async (symbol) => {
+  try {
+    const response = await fetch(`/api/yahoo/${symbol}`);
+    
+
+    if (!response.ok) {
+      throw new Error(`API error: ${response.status}`);
+    }
+
+    const contentType = response.headers.get("content-type");
+    if (!contentType || !contentType.includes("application/json")) {
+      throw new Error("Invalid response format (expected JSON)");
+    }
+
+    const data = await response.json();
+    return data?.quoteResponse?.result?.[0] || data;
   } catch (err) {
     console.error("fetchStockDetails error:", err.message);
     return null;
