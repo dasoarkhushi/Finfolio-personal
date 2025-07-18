@@ -59,41 +59,9 @@ app.listen(PORT, () => {
  */
 
 //  This should be in frontend file: src/api/yahoofinance.js
-/* export const fetchStockDetails = async (symbol) => {
-  try {
-    const response = await fetch(`/api/yahoo/${symbol}`);
-
-    if (!response.ok) {
-      throw new Error(`API error: ${response.status}`);
-    }
-
-    const contentType = response.headers.get("content-type");
-    if (!contentType || !contentType.includes("application/json")) {
-  const rawText = await response.text(); // Read raw response
-  console.error("Non-JSON response:", rawText);
-  throw new Error("Invalid response format (expected JSON)");
-}
-
-
-    const data = await response.json();
-
-  
-    const stock =
-      data?.quoteResponse?.result?.[0] || data;
-
-    if (!stock || !stock.symbol) {
-      throw new Error(`No data for ${symbol}`);
-    }
-
-    return stock;
-  } catch (err) {
-    console.error("fetchStockDetails error:", err.message);
-    return null;
-  }
-}; */
-
+ 
 // /client/src/api/yahoofinance.js
-export const fetchStockDetails = async (symbol) => {
+/* export const fetchStockDetails = async (symbol) => {
   try {
     const response = await fetch(`/api/yahoo/${symbol}`);
     
@@ -111,6 +79,53 @@ export const fetchStockDetails = async (symbol) => {
     return data?.quoteResponse?.result?.[0] || data;
   } catch (err) {
     console.error("fetchStockDetails error:", err.message);
+    return null;
+  }
+}; */
+
+/* 
+const BASE_URL = process.env.REACT_APP_API_BASE_URL || "http://localhost:5000";
+
+export const fetchStockDetails = async (symbol) => {
+  try {
+    const response = await fetch(`${BASE_URL}/api/stocks/${symbol}`);
+    if (!response.ok) throw new Error("Network response was not ok");
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    console.error("fetchStockDetails error:", err.message);
+    return null;
+  }
+};
+ */
+
+export const fetchStockDetails = async (symbol) => {
+  try {
+    const response = await fetch(`/api/yahoo/${symbol}`);
+
+    if (!response.ok) {
+      throw new Error(`API error: ${response.status}`);
+    }
+
+    const contentType = response.headers.get("content-type");
+    if (!contentType || !contentType.includes("application/json")) {
+      const rawText = await response.text(); // Read raw response for debugging
+      console.error(`Non-JSON response for ${symbol}:`, rawText);
+      throw new Error("Invalid response format (expected JSON)");
+    }
+
+    const data = await response.json();
+
+    // Handle either direct YahooFinance or wrapped proxy structure
+    const stock = data?.quoteResponse?.result?.[0] || data;
+
+    if (!stock || !stock.symbol) {
+      throw new Error(`No stock data found for ${symbol}`);
+    }
+
+    return stock;
+  } catch (err) {
+    console.error(`fetchStockDetails error for ${symbol}:`, err.message);
     return null;
   }
 };

@@ -1,7 +1,8 @@
 // This fetches real-time quote data from Yahoo Finance's public API
 export const fetchStockDetails = async (symbol) => {
   try {
-    const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/yahoo/${symbol}`);
+    const response = await fetch(`/api/yahoo/${symbol}`)
+
 
     const contentType = response.headers.get("content-type");
     if (!contentType || !contentType.includes("application/json")) {
@@ -15,8 +16,11 @@ export const fetchStockDetails = async (symbol) => {
     }
 
     return {
+      symbol: data.symbol,
+      marketState: data.marketState || "UNKNOWN",
       regularMarketPrice: data.regularMarketPrice,
       regularMarketPreviousClose: data.regularMarketPreviousClose,
+      regularMarketChange: data.regularMarketChange,
     };
   } catch (err) {
     console.error("fetchStockDetails error:", err.message);

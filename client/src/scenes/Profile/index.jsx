@@ -216,8 +216,8 @@ export default function Profile() {
       </Card>
     </Box>
   );
-}
- */
+} */
+ 
 
 import React, { useEffect, useState } from "react";
 import {
@@ -298,7 +298,7 @@ export default function Profile() {
     };
 
     load();
-    const interval = setInterval(load, 30000); // refresh every 30s
+    const interval = setInterval(load, 30000); 
     return () => clearInterval(interval);
   }, []);
 
@@ -399,11 +399,11 @@ export default function Profile() {
             <thead>
               <tr style={{ color: colors.grey[300], textAlign: "left" }}>
                 <th>Date</th>
-                <th>Ticker</th>
+                <th>Symbol</th>
                 <th>Type</th>
                 <th>Qty</th>
                 <th>Price</th>
-                <th>Market Status</th>
+                <th>Market Change</th>
                 <th>Status</th>
               </tr>
             </thead>
@@ -415,7 +415,7 @@ export default function Profile() {
                   <td>{t.type}</td>
                   <td>{t.qty}</td>
                   <td>₹{t.regularMarketPrice?.toFixed(2) || "N/A"}</td>
-                  <td>{t.marketState || "OPEN"}</td>
+                  <td>₹{t.regularMarketChange}</td>
                   <td>Completed</td>
                 </tr>
               ))}

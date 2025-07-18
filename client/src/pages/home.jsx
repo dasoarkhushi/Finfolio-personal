@@ -1,5 +1,5 @@
 // src/pages/Home.jsx
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import {
   Box,
   Typography,
@@ -12,17 +12,38 @@ import {
   Button,
   useTheme
 } from "@mui/material";
-import { ColorModeContext, tokens } from "../theme";
+import { tokens } from "../theme";
 
 export default function Home() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [email, setEmail] = useState("");
   const [open, setOpen] = useState(false);
+  const [error, setError] = useState(false);
 
-  const handleSubscribe = () => {
-    setOpen(true);
-    setEmail("");
+  // ✅ Nodemailer API call
+  const handleSubscribe = async () => {
+    if (!email) return;
+
+    try {
+      const res = await fetch("/api/newsletter/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+
+      if (res.ok) {
+        setOpen(true);
+        setEmail("");
+        setError(false);
+      } else {
+        console.error("Backend response error:", await res.text());
+        setError(true);
+      }
+    } catch (err) {
+      console.error("Email error:", err);
+      setError(true);
+    }
   };
 
   const paperBackground = theme.palette.mode === "light" ? colors.grey[100] : colors.primary[600];
@@ -64,7 +85,7 @@ export default function Home() {
           Explore FinFolio's smart tools to manage your wealth.
         </Typography>
         <Grid container spacing={4}>
-          {["Live Stock Tracker","Portfolio Overview","Risk Analyzer","Auto Alerts","Watchlist Creator","Performance Insights"].map((feature, index) => (
+          {["Live Stock Tracker", "Portfolio Overview", "Risk Analyzer", "Auto Alerts", "Watchlist Creator", "Performance Insights"].map((feature, index) => (
             <Grid item xs={12} sm={6} md={4} key={index}>
               <Paper elevation={3} sx={{ p: 4, backgroundColor: paperBackground, color: paperText, borderRadius: 4, height: '100%', transition: 'transform 0.3s', '&:hover': { transform: 'translateY(-4px)' } }}>
                 <Typography variant="h6" fontWeight="bold" gutterBottom>{feature}</Typography>
@@ -95,8 +116,15 @@ export default function Home() {
             <Button variant="contained" sx={{ bgcolor: colors.greenAccent[500], color: colors.grey[900] }} onClick={handleSubscribe}>Subscribe</Button>
           </Box>
         </Paper>
+
+        {/* Snackbar for success */}
         <Snackbar open={open} autoHideDuration={4000} onClose={() => setOpen(false)}>
-          <Alert severity="success" sx={{ width: '100%' }}>You're subscribed!</Alert>
+          <Alert severity="success" sx={{ width: '100%' }}>You're subscribed! Check your inbox.</Alert>
+        </Snackbar>
+
+        {/* Snackbar for error */}
+        <Snackbar open={error} autoHideDuration={4000} onClose={() => setError(false)}>
+          <Alert severity="error" sx={{ width: '100%' }}>Subscription failed. Try again later.</Alert>
         </Snackbar>
       </Container>
     </Box>
