@@ -1,4 +1,4 @@
- /* import React from "react";
+/*  import React from "react";
 
 export default function ChatWidget() {
   return (
@@ -11,7 +11,7 @@ export default function ChatWidget() {
         height: "400px",
         border: "1px solid #ccc",
         borderRadius: "10px",
-        background: "#fff",
+        background: "#3ab58a",
         zIndex: 9999,
         boxShadow: "0 4px 20px rgba(253, 42, 42, 0.57)",
         overflow: "hidden"
@@ -25,9 +25,9 @@ export default function ChatWidget() {
 
     </div>
   );
-}  */
-
-import React, { useContext } from "react";
+} 
+ */
+/* import React, { useContext } from "react";
 import { useTheme, IconButton } from "@mui/material";
 import { ColorModeContext } from "../../theme"; // adjust path to match your context file
 import LightModeIcon from "@mui/icons-material/LightMode";
@@ -62,7 +62,7 @@ export default function ChatWidget() {
         flexDirection: "column",
       }}
     >
-      {/* Theme toggle bar */}
+    
       <div
         style={{
           display: "flex",
@@ -82,12 +82,40 @@ export default function ChatWidget() {
         </IconButton>
       </div>
 
-      {/* Chat iframe */}
       <iframe
         title="Chatbot"
         src="about:blank"
         style={{ flex: 1, border: "none" }}
       />
     </div>
+  );
+}
+ */
+
+import React from "react";
+import { IconButton } from "@mui/material";
+import ChatIcon from "@mui/icons-material/Chat";
+
+export default function ChatButton({ onClick }) {
+  return (
+    <IconButton
+      onClick={onClick}
+      sx={{
+        position: "fixed",
+        bottom: 20,
+        right: 20,
+        backgroundColor: "#3da58a",       // ✅ Update this to match your theme
+        color: "#fff",                     // ✅ White chat icon
+        width: 56,
+        height: 56,
+        zIndex: 9999,
+        boxShadow: "0 4px 10px rgba(61, 165, 138, 0.4)", // ✅ Soft green glow
+        "&:hover": {
+          backgroundColor: "#2c8b72"       // ✅ Darker green on hover
+        }
+      }}
+    >
+      <ChatIcon sx={{ fontSize: 28 }} />
+    </IconButton>
   );
 }

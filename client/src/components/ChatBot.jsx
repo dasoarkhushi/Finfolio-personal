@@ -197,7 +197,7 @@ const ChatBot = () => {
           }}
           elevation={6}
         >
-          <Typography variant="h6" mb={1} color="primary">
+          <Typography variant="h6" mb={1} color="red">
             FinFolio Assistant
           </Typography>
 
