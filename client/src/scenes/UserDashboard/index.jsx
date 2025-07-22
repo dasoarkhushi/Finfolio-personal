@@ -467,7 +467,6 @@ import { tokens } from "../../theme";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
 import Header from "../../components/Header";
 import { fetchStockDetails } from "../../services/yahooFetch";
-import { holdings as staticHoldings } from "../../data/portfolioData";
 import { ResponsivePie } from "@nivo/pie";
 import { useNavigate } from "react-router-dom";
 
@@ -493,15 +492,8 @@ const UserDashboard = () => {
     const fetchPortfolio = async () => {
       let total = 0;
       let changeToday = 0;
-      let mergedHoldings = {};
+      const mergedHoldings = {};
 
-      // Add static holdings first
-      for (const stock of staticHoldings) {
-        const key = normalizeSymbol(stock.symbol);
-        mergedHoldings[key] = { ...stock, symbol: key };
-      }
-
-      // Fetch backend holdings and merge with static
       try {
         const res = await fetch(`/api/userstocks/${user.email}`);
         const userStocks = await res.json();
@@ -585,7 +577,6 @@ const UserDashboard = () => {
 
   return (
     <Box m="20px">
-      {/* USER DASHBOARD HEADER */}
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Header
           title="📈 My Portfolio"
@@ -609,7 +600,6 @@ const UserDashboard = () => {
         </Tooltip>
       </Box>
 
-      {/* PORTFOLIO SUMMARY */}
       <Box
         mt="20px"
         p="25px"
@@ -625,7 +615,6 @@ const UserDashboard = () => {
         </Typography>
       </Box>
 
-      {/* ALLOCATION + HOLDINGS ROW */}
       <Box
         mt="30px"
         display="flex"

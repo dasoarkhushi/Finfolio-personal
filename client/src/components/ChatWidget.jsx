@@ -99,23 +99,25 @@ import ChatIcon from "@mui/icons-material/Chat";
 export default function ChatButton({ onClick }) {
   return (
     <IconButton
-      onClick={onClick}
-      sx={{
-        position: "fixed",
-        bottom: 20,
-        right: 20,
-        backgroundColor: "#3da58a",       // ✅ Update this to match your theme
-        color: "#fff",                     // ✅ White chat icon
-        width: 56,
-        height: 56,
-        zIndex: 9999,
-        boxShadow: "0 4px 10px rgba(61, 165, 138, 0.4)", // ✅ Soft green glow
-        "&:hover": {
-          backgroundColor: "#2c8b72"       // ✅ Darker green on hover
-        }
-      }}
-    >
-      <ChatIcon sx={{ fontSize: 28 }} />
-    </IconButton>
+  onClick={onClick}
+  sx={{
+    position: "fixed",
+    bottom: 24,
+    right: 24,
+    backgroundColor: "#00c676",             // ✅ Brighter green
+    color: "#fff",                          // ✅ White icon
+    width: 60,
+    height: 60,
+    border: "2px solid white",              // ✅ Border for visibility
+    zIndex: 9999,
+    boxShadow: "0 6px 15px rgba(0, 255, 160, 0.4)",  // ✅ Brighter glow
+    "&:hover": {
+      backgroundColor: "#00a35a",           // ✅ Darker on hover
+    }
+  }}
+>
+  <ChatIcon sx={{ fontSize: 30 }} />
+</IconButton>
+
   );
 }
