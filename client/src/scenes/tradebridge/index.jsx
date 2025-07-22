@@ -210,7 +210,7 @@ import Header from "../../components/Header";
 
 const stockOptions = [
   { label: "TCS", value: "TCS" },
-  { label: "INFY", value: "INFY" },
+  { label: "HDFCBANK", value: "HDFCBANK" },
   { label: "RELIANCE", value: "RELIANCE" },
 ];
 

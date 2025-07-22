@@ -151,7 +151,7 @@ export default function Support() {
               </Typography>
               <Divider sx={{ my: 2, borderColor: colors.grey[500] }} />
               <Typography variant="body1" gutterBottom>
-                <strong>Email:</strong> dasoark@gmail.com
+                <strong>Email:</strong> finfoliohelpdesk@gmail.com
               </Typography>
               <Typography variant="body1" gutterBottom>
                 <strong>Phone:</strong> +91 9999324034

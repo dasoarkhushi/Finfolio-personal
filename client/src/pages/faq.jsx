@@ -8,11 +8,11 @@ const faqData = [
   {
     question: "What is FinFolio and how does it work?",
     answer: "FinFolio is a smart stock portfolio management platform that allows you to track, analyze, and manage your investments in real-time. It integrates market data, insights, and tools for better decision-making."
-  },
+  },          
   {
     question: "How do I create an account on FinFolio?",
     answer: "Click on 'Sign Up', enter your basic details, verify your email, and log in to access your personalized dashboard."
-  },
+  },                                                                                                                                                                                                                                                                                                                                                   
   {
     question: "Can I track live stock prices on FinFolio?",
     answer: "Yes, FinFolio provides real-time updates on stock prices, market movements, and your portfolio's performance using live financial data."

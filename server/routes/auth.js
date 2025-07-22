@@ -54,7 +54,7 @@ router.post("/login", async (req, res) => {
         },
         {
           email,
-          symbol: "INFY",
+          symbol: "HDFCBANK",
           quantity: 5,
           price: 1400,
           time: new Date().toISOString()

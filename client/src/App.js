@@ -5,6 +5,7 @@ import Sidebar from "./scenes/global/Sidebar";
 import UserDashboard from "./scenes/UserDashboard";
 import Market from "./scenes/marketstock";
 import TradeBridge from "./scenes/tradebridge";
+import PurchasePage from "./scenes/Purchase";
 import Profile from "./scenes/Profile";
 import Bar from "./scenes/bar";
 import StockListPage from "./scenes/mystock";
@@ -25,7 +26,11 @@ import News from "./pages/news";
 import PublicHeader from "./components/PublicHeader";
 import PublicFooter from "./components/PublicFooter";
 
+
+
+
 function App() {
+  const user = JSON.parse(localStorage.getItem("user"));
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
   const location = useLocation();
@@ -66,6 +71,8 @@ function App() {
 
                   <Route path="/marketstock" element={<Market />} />
                   <Route path="/tradebridge" element={<TradeBridge />} />
+                  <Route path="/purchase" element={<PurchasePage email={user?.email} />} />
+
                   <Route path="/profile" element={<Profile />} />
                   <Route path="/mystock" element={<StockListPage />} />
                   <Route path="/bar" element={<Bar />} />

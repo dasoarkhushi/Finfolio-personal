@@ -237,8 +237,8 @@ import {
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
 import { fetchStockDetails } from "../../services/yahooFetch";
+import { fetchTradesByEmail } from "../../services/tradeService";
 
-const tradeSymbols = ["TCS.NS", "INFY.NS", "SBIN.NS"];
 
 export default function Profile() {
   const theme = useTheme();
@@ -257,34 +257,40 @@ export default function Profile() {
     cash: 120000,
   });
 
-  useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    if (storedUser) {
-      setName(storedUser.name || "");
-      setUsername(storedUser.email || "");
-    }
+
+
+useEffect(() => {
+  const storedUser = JSON.parse(localStorage.getItem("user"));
+  if (storedUser) {
+    setName(storedUser.name || "");
+    setUsername(storedUser.email || "");
 
     const load = async () => {
-      const results = await Promise.all(tradeSymbols.map(fetchStockDetails));
-      const withMeta = results.map((s, i) => {
-        const qty = 10 + i * 5;
-        const invested = qty * s.regularMarketPreviousClose;
-        const current = qty * s.regularMarketPrice;
-        const todayChange = (s.regularMarketPrice - s.regularMarketPreviousClose) * qty;
-        return {
-          ...s,
-          type: i % 2 === 0 ? "Buy" : "Sell",
-          qty,
-          date: new Date().toLocaleDateString(),
-          invested,
-          current,
-          todayChange,
-        };
-      });
+      const rawTrades = await fetchTradesByEmail(storedUser.email);
+      const enriched = await Promise.all(
+        rawTrades.map(async (t) => {
+          const s = await fetchStockDetails(t.symbol);
+          return {
+            ...t,
+            ...s,
+            qty: t.quantity,
+            type: t.quantity > 0 ? "Buy" : "Sell",
+            date: new Date(t.tradeTime).toLocaleDateString(),
+          };
+        })
+      );
 
-      const invested = withMeta.reduce((sum, s) => sum + s.invested, 0);
-      const current = withMeta.reduce((sum, s) => sum + s.current, 0);
-      const todayChange = withMeta.reduce((sum, s) => sum + s.todayChange, 0);
+      const invested = enriched
+        .filter((t) => t.type === "Buy")
+        .reduce((sum, t) => sum + t.price * t.qty, 0);
+
+      const current = enriched.reduce((sum, t) => sum + (t.regularMarketPrice || 0) * t.qty, 0);
+      const todayChange = enriched.reduce(
+        (sum, t) =>
+          sum +
+          ((t.regularMarketPrice - t.regularMarketPreviousClose) * t.qty || 0),
+        0
+      );
 
       setPortfolioStats({
         totalValue: current,
@@ -294,13 +300,14 @@ export default function Profile() {
         cash: 120000,
       });
 
-      setTrades(withMeta);
+      setTrades(enriched);
     };
 
     load();
-    const interval = setInterval(load, 30000); 
+    const interval = setInterval(load, 30000);
     return () => clearInterval(interval);
-  }, []);
+  }
+}, []);
 
   const handleSave = () => {
     const updatedUser = { name, email: username };

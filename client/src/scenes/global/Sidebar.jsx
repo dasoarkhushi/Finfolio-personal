@@ -16,6 +16,8 @@ import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutl
 import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -155,6 +157,15 @@ const userName = user?.name || "User";
               selected={selected}
               setSelected={setSelected}
             />
+
+            <Item
+  title="Purchase"
+  to="/purchase"
+  icon={<ShoppingCartOutlinedIcon />}
+  selected={selected}
+  setSelected={setSelected}
+/>
+
 
                <Item
               title="Market Stocks"
