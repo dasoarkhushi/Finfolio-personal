@@ -77,7 +77,7 @@ router.post("/login", async (req, res) => {
       quantity: stock.quantity
     }));
 
-    // ✅ Sync to userwithstocks
+    //  Sync to userwithstocks
     const existing = await UserWithStocks.findOne({ email });
 
     if (existing) {
@@ -91,7 +91,7 @@ router.post("/login", async (req, res) => {
       });
     }
 
-    // ✅ Send back login success
+    // Send back login success
     res.json({
       token,
       user: {
