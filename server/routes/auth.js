@@ -118,7 +118,7 @@ const UserWithStocks = require("../models/userstocks");
 
 const JWT_SECRET = process.env.JWT_SECRET || "finfolio-secret";
 
-// ===================== SIGNUP =====================
+
 router.post("/signup", async (req, res) => {
   const { name, email, password } = req.body;
 

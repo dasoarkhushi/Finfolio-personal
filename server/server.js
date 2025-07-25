@@ -243,6 +243,9 @@ const sellRoute = require("./routes/sell");
 const userStocksRoute = require("./routes/userstocks"); // ✅ ADDED
   
 const tradeRoute = require("./routes/trades");
+const importRoute = require("./routes/import");
+
+
 
 const { OpenAI } = require("openai");
 const yahooFinance = require("yahoo-finance2").default;
@@ -260,7 +263,7 @@ app.use("/api/purchase", purchaseRoute);
 app.use("/api/sell", sellRoute);
 app.use("/api/userstocks", userStocksRoute);
 app.use("/api/trades", tradeRoute);
-
+app.use("/api/import", importRoute);
 
 // === Health Check ===
 app.get("/", (req, res) => {

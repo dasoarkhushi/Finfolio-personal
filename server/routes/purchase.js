@@ -7,28 +7,25 @@ router.post("/", async (req, res) => {
   const { email, symbol, quantity, price } = req.body;
 
   try {
-    const qty = Number(quantity); // Ensure quantity is a number
-
-    // 1. Record the trade (FIXED: Added tradeType here)
-    await Trade.create({
+    const qty = Number(quantity); 
+     await Trade.create({
       email,
       symbol,
       quantity: qty,
       price,
-      tradeType: "buy" // ✅ This line fixes the issue!
+      tradeType: "buy" 
     });
 
-    // 2. Find user by email
+
     let userRecord = await UserWithStocks.findOne({ email });
 
-    // If user doesn't exist, create with this stock
     if (!userRecord) {
       userRecord = await UserWithStocks.create({
         email,
         stocks: qty > 0 ? [{ symbol, quantity: qty }] : [],
       });
     } else {
-      // Ensure stocks array exists
+     
       if (!Array.isArray(userRecord.stocks)) {
         userRecord.stocks = [];
       }

@@ -209,10 +209,23 @@ import { tokens } from "../../theme";
 import Header from "../../components/Header";
 
 const stockOptions = [
+  { label: "RELIANCE", value: "RELIANCE" },
   { label: "TCS", value: "TCS" },
   { label: "HDFCBANK", value: "HDFCBANK" },
-  { label: "RELIANCE", value: "RELIANCE" },
+  { label: "INFY", value: "INFY" },
+  { label: "ICICIBANK", value: "ICICIBANK" },
+  { label: "ITC", value: "ITC" },
+  { label: "KOTAKBANK", value: "KOTAKBANK" },
+  { label: "HINDUNILVR", value: "HINDUNILVR" },
+  { label: "SBIN", value: "SBIN" },
+  { label: "LT", value: "LT" },
+  { label: "AXISBANK", value: "AXISBANK" },
+  { label: "BAJFINANCE", value: "BAJFINANCE" },
+  { label: "MARUTI", value: "MARUTI" },
+  { label: "WIPRO", value: "WIPRO" },
+  { label: "SUNPHARMA", value: "SUNPHARMA" },
 ];
+
 
 const TradeBridge = () => {
   const theme = useTheme();

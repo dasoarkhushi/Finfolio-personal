@@ -25,6 +25,9 @@ import News from "./pages/news";
 
 import PublicHeader from "./components/PublicHeader";
 import PublicFooter from "./components/PublicFooter";
+/* import ImportStocks from "./pages/ImportStocks";  */
+
+
 
 
 
@@ -55,6 +58,7 @@ function App() {
                 <Route path="/faq" element={<Faq />} />
                 <Route path="/news" element={<News />} />
                 <Route path="/support" element={<Support />} />
+                {/* <Route path="/import" element={<ImportStocks />} /> */}
               </Routes>
             </main>
             <PublicFooter />
